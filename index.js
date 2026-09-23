@@ -80,8 +80,9 @@ class Client {
 }
 
 class GameManager {
-    constructor() {
+    constructor(clientManager) {
         this.games = {};
+        this.clientManager = clientManager;
     }
 
     createGame(hostId) {
@@ -208,8 +209,8 @@ class Application {
         this.server = http.createServer(this.app);
         this.wss = new WebSocket.Server({ server: this.server });
         this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-        this.gameManager = new GameManager();
         this.clientManager = new ClientManager();
+        this.gameManager = new GameManager(this.clientManager);
         this.wordGenerator = new WordGenerator(this.openai);
         this.imageGenerator = new ImageGenerator(this.openai);
 
