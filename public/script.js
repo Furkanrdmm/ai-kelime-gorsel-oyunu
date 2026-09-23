@@ -1,7 +1,8 @@
 $(document).ready(function () {
     const modal = new bootstrap.Modal(document.getElementById('infoModal'));
     const countdownModal = new bootstrap.Modal(document.getElementById('countdownModal'));
-    const socket = new WebSocket('ws://localhost:3000');
+    const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const socket = new WebSocket(`${wsProtocol}//${location.host}`);
     let clientId, gameId;
     let selectedWords = [];
     let selectedImageIndex = -1;

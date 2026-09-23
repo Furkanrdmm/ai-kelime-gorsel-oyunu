@@ -162,7 +162,7 @@ class WordGenerator {
         try {
             const completion = await this.openai.chat.completions.create({
                 messages: [{ role: "system", content: "Birbirinden farklı 12 tane türkçe kelime ver. Verdiğin cevapta sadece kelimeler olsun, Sıralama yapma. Sadece boşluklarla ayır. Bu kelimelerle görsel üreteceğim ona göre kelimeler ver." }],
-                model: "gpt-4",
+                model: process.env.OPENAI_TEXT_MODEL || "gpt-4",
             });
             const generatedText = completion.choices[0].message.content.trim();
             return generatedText.split(/\s+/).slice(0, 12);
@@ -189,7 +189,7 @@ class ImageGenerator {
 
         try {
             const response = await this.openai.images.generate({
-                model: "dall-e-2",
+                model: process.env.OPENAI_IMAGE_MODEL || "dall-e-2",
                 prompt: prompt,
                 n: 1,
                 size: "256x256"
@@ -514,4 +514,4 @@ class Application {
 }
 
 const app = new Application();
-app.start(3000);
+app.start(process.env.PORT || 3000);
