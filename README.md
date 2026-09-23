@@ -1,5 +1,7 @@
 # AI Kelime & Görsel Oyunu
 
+> *Yapay Zeka Destekli Tarayıcı Tabanlı Çevrimiçi Görsel Tahmin Oyunu*
+
 İki oyuncunun gerçek zamanlı olarak karşılaştığı, yapay zekâ destekli bir kelime tahmin oyunu. Oyuncular seçtikleri kelimelerle bir cümle kurar, **DALL-E** bu cümleden görsel üretir ve rakip, sadece görsele bakarak hangi kelimelerin seçildiğini tahmin etmeye çalışır.
 
 Kırıkkale Üniversitesi Bilgisayar Mühendisliği **Bitirme Projesi 2** kapsamında geliştirilmiştir (Haziran–Temmuz 2024).
@@ -71,6 +73,10 @@ npm start
 Oyun `http://localhost:3000` adresinde açılır. Denemek için iki farklı tarayıcı sekmesi açıp birinde oyun oluşturun, diğerinde oyun koduyla katılın.
 
 **İsteğe bağlı ayarlar:** `PORT`, `OPENAI_TEXT_MODEL` (varsayılan `gpt-4`) ve `OPENAI_IMAGE_MODEL` (varsayılan `dall-e-2`) değişkenleri `.env` üzerinden değiştirilebilir. Görsel modeli, yanıtında görsel URL'i döndüren bir model olmalıdır.
+
+## Tasarımdan uygulamaya
+
+Projenin başlangıçtaki tasarımında görseller **Stable Diffusion** ile üretilecek, oyun ikiden fazla oyuncuyla ve her turda bir oyuncunun "anlatıcı" olduğu sırayla oynanacaktı. Geliştirme sürecinde görsel üretimi OpenAI'ın **DALL-E** modeline taşındı; böylece kelime ve görsel üretimi aynı API üzerinden yapılıyor. Oyun akışı da iki oyuncunun aynı anda görsel üretip birbirinin kelimesini tahmin ettiği bir yapıya dönüştü.
 
 ## Bilinen kısıtlar
 
