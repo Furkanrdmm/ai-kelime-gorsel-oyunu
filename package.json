@@ -1,0 +1,23 @@
+{
+  "name": "ai-kelime-gorsel-oyunu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file=.env index.js",
+    "dev": "nodemon --exec \"node --env-file=.env\" index.js"
+  },
+  "engines": {
+    "node": ">=20.6"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4",
+    "openai": "^4.52.0",
+    "uuid": "^10.0.0",
+    "ws": "^8.17.1"
+  }
+}

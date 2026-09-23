@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyun Platformu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="login-container" class="game-card">
+            <h2 class="text-center mb-4"><i class="fas fa-gamepad"></i> Oyun Girişi</h2>
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" id="username" class="form-control" placeholder="Kullanıcı Adı">
+            </div>
+            <button id="login-button" class="btn btn-primary w-100">Giriş</button>
+        </div>
+
+        <div id="game-container" class="game-card" style="display: none;">
+            <h2 class="text-center mb-4"><i class="fas fa-dice"></i> Oyun Sayfası</h2>
+            <button id="create-game" class="btn btn-success w-100 mb-3">
+                <i class="fas fa-plus-circle"></i> Oyun Oluştur
+            </button>
+            <button id="join-game" class="btn btn-info w-100 mb-3">
+                <i class="fas fa-sign-in-alt"></i> Oyuna Katıl
+            </button>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                <input type="text" id="game-id" class="form-control" placeholder="Oyun ID">
+            </div>
+        </div>
+
+        <div id="lobby-container" class="game-card" style="display: none;">
+            <h2 class="text-center mb-4"><i class="fas fa-users"></i> Lobi</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span id="game-id-display" class="h5"></span>
+                <button id="copy-game-id" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <h5>Oyuncular:</h5>
+            <ul id="player-list" class="list-group mb-3"></ul>
+            <button id="ready-button" class="btn btn-success w-100">Hazırım</button>
+        </div>
+
+        <div id="game-area" class="game-card2" style="display: none;">
+            <div class="row g-4">
+                
+                <div class="col-md-12">
+                    <div id="word-selection-area" class="game-section">
+                        <h3 class="section-title">Kelime Seçimi</h3>
+                        <div id="word-list" class="mb-4">
+                            <!-- Kelimeler buraya eklenecek -->
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div id="selected-words-count">0 / 3 kelime seçildi</div>
+                            <button id="select-words-button" class="btn btn-primary">Kelimeleri Belirle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="image-generation-area" class="game-section mt-4" style="display: none;">
+            <h3 class="section-title">Görsel Oluşturma</h3>
+            <div id="selected-words" class="mb-3 d-flex justify-content-center flex-wrap"></div>
+            <div class="input-group mb-3">
+                <input type="text" id="image-prompt" class="form-control" placeholder="Görsel için açıklama girin">
+                <button id="generate-image-button" class="btn btn-primary">Görsel Oluştur</button>
+            </div>
+            <div id="image-loading" class="text-center" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Yükleniyor...</span>
+                </div>
+                <p class="mt-2">Görseller üretiliyor...</p>
+            </div>
+            <div id="generated-images" class="d-flex justify-content-center align-items-center flex-wrap mt-4" style="display: none !important; ">
+                <div class="generated-image-container m-2">
+                    <img src="" alt="Görsel 1" class="img-fluid generated-image">
+                </div>
+                <div class="generated-image-container m-2">
+                    <img src="" alt="Görsel 2" class="img-fluid generated-image">
+                </div>
+                <div class="generated-image-container m-2">
+                    <img src="" alt="Görsel 3" class="img-fluid generated-image">
+                </div>
+            </div>
+            <button id="select-image-button" class="btn btn-success mt-3 w-100" style="display: none;">Görseli Seç</button>
+        </div>
+
+        <div id="guess-area" class="game-card2" style="display: none;">
+            <div class="row g-4">
+                <div class="col-md-12">
+                    <div class="game-section">
+                        <h3 class="section-title">Rakibin Görseli</h3>
+                        <div id="opponent-image-container" class="mb-4"></div>
+                        <h3 class="section-title">Kelime Tahmini</h3>
+                        <div id="guess-word-list" class="mb-4">
+                            <!-- Kelimeler buraya eklenecek -->
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div id="guess-count">0 / 3 kelime seçildi</div>
+                            <button id="submit-guess" class="btn btn-primary">Tahmin Et</button>
+                        </div>
+                        <div id="guess-result-container" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+    
+
+    <!-- Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Countdown Modal -->
+    <div class="modal fade" id="countdownModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content countdown-modal">
+                <div class="modal-body text-center">
+                    <h2 class="mb-4">Oyun Başlıyor!</h2>
+                    <div class="countdown-circle">
+                        <span id="countdown">3</span>
+                    </div>
+                    <p class="mt-4">Hazır olun...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
