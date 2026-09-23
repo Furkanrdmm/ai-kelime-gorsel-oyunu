@@ -418,37 +418,6 @@ class Application {
         });
     }
 
-    startImageRevealCountdown(gameId) {
-        let count = 3;
-        const countdownInterval = setInterval(() => {
-            this.broadcastToGame(gameId, {
-                type: 'imageRevealCountdown',
-                count
-            });
-            if (count === 0) {
-                clearInterval(countdownInterval);
-                this.revealImages(gameId);
-            }
-            count--;
-        }, 1000);
-    }
-
-    revealImages(gameId) {
-        const game = this.gameManager.getGame(gameId);
-        const gameData = game.clients.map(clientId => {
-            const client = this.clientManager.getClient(clientId);
-            return {
-                clientId,
-                selectedImage: client.generatedImages[client.selectedImageIndex],
-                selectedWords: client.selectedWords
-            };
-        });
-        this.broadcastToGame(gameId, {
-            type: 'revealImages',
-            gameData
-        });
-    }
-
     handleWordGuess(clientId, guessedWords) {
         const client = this.clientManager.getClient(clientId);
         client.guessedWords = guessedWords;

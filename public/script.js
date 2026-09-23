@@ -55,13 +55,6 @@ $(document).ready(function () {
             case 'images':
                 displayImages(data.images);
                 break;
-
-            case 'imageRevealCountdown':
-                showImageRevealCountdown(data.count);
-                break;
-            case 'revealImages':
-                revealImages(data.gameData);
-                break;
             case 'guessResult':
                 if (Array.isArray(data.result) && data.result.length === 3) {
                     showGuessResult(data.result);
@@ -230,31 +223,6 @@ $(document).ready(function () {
     });
 
 
-
-    function showGuessInputs() {
-        const $guessContainer = $('#guess-container');
-        $guessContainer.empty().show();
-        for (let i = 0; i < 3; i++) {
-            $guessContainer.append($('<input>').attr('type', 'text').addClass('guess-input'));
-        }
-        $guessContainer.append($('<button>').text('Tahmin Et').click(submitGuess));
-    }
-
-    function showImageRevealCountdown(count) {
-        $('#countdown').text(`Görseller gösteriliyor: ${count}`).show();
-    }
-
-    function revealImages(gameData) {
-        $('#countdown').hide();
-        const $revealContainer = $('<div>').attr('id', 'reveal-container');
-        gameData.forEach(data => {
-            const $playerReveal = $('<div>').addClass('player-reveal');
-            $playerReveal.append($('<img>').attr('src', data.selectedImage));
-            $revealContainer.append($playerReveal);
-        });
-        $('#game-container').append($revealContainer);
-        showGuessInputs();
-    }
 
     function submitGuess() {
         const guessedWords = $('#guess-word-list .selected').map(function () {
