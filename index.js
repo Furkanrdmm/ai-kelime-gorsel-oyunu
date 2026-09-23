@@ -224,8 +224,13 @@ class Application {
             this.sendMessage(client.id, { type: 'connected', clientId: client.id });
 
             ws.on('message', async (message) => {
-                const data = JSON.parse(message);
-                await this.handleMessage(client.id, data);
+                try {
+                    const data = JSON.parse(message);
+                    await this.handleMessage(client.id, data);
+                } catch (error) {
+                    console.error("Error handling message:", error);
+                    this.sendMessage(client.id, { type: 'error', message: 'Invalid message' });
+                }
             });
 
             ws.on('close', () => this.handleDisconnect(client.id));
