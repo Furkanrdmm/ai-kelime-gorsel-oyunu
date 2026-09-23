@@ -165,7 +165,8 @@ class WordGenerator {
                 model: process.env.OPENAI_TEXT_MODEL || "gpt-4",
             });
             const generatedText = completion.choices[0].message.content.trim();
-            return generatedText.split(/\s+/).slice(0, 12);
+            // Model talimata rağmen kelimeleri virgülle ayırabiliyor ("Deniz, dağ, ...")
+            return generatedText.split(/[\s,.;]+/).filter(Boolean).slice(0, 12);
         } catch (error) {
             console.error("Error generating words:", error);
             return [];
